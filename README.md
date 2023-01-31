@@ -70,3 +70,22 @@ Test results:
 - PASS: testGetIntegerTrait
 Coverage: 100.0% of statements
 ```
+
+For some more realistic contracts and tests:
+
+```bash
+bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_array_utils.cdc
+
+Running tests...
+
+Test results:
+- PASS: testRange
+- PASS: testTransform
+- PASS: testIterate
+- PASS: testMap
+- PASS: testMapStrings
+- PASS: testReduce
+Coverage: 100.0% of statements
+```
+
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract).

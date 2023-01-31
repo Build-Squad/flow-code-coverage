@@ -1,0 +1,124 @@
+import ArrayUtils from "./ArrayUtils.cdc"
+
+pub struct Token {
+    pub let id: Int
+    pub(set) var balance: Int
+
+    init(id: Int, balance: Int) {
+        self.id = id
+        self.balance = balance
+    }
+}
+
+pub(set) var arrayUtils = ArrayUtils()
+
+pub fun testRange() {
+    // Act
+    let range = arrayUtils.range(0, 10)
+
+    // Assert
+    let expected: [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    for i in expected {
+        assert(range.contains(i))
+    }
+}
+
+pub fun testTransform() {
+    // Arrange
+    let tokens = [
+        Token(id: 0, balance: 10),
+        Token(id: 1, balance: 5),
+        Token(id: 2, balance: 15)
+    ]
+
+    // Act
+    arrayUtils.transform(&tokens as &[AnyStruct], fun (t: AnyStruct): AnyStruct {
+        var token = t as! Token
+        token.balance = token.balance * 2
+        return token
+    })
+
+    // Assert
+    assert(tokens[0].balance == 20)
+    assert(tokens[1].balance == 10)
+    assert(tokens[2].balance == 30)
+}
+
+pub fun testIterate() {
+    // Arrange
+    let tokens = [
+        Token(id: 0, balance: 10),
+        Token(id: 1, balance: 5),
+        Token(id: 2, balance: 15),
+        Token(id: 3, balance: 22),
+        Token(id: 4, balance: 31)
+    ]
+
+    // Act
+    let result = arrayUtils.iterate(tokens as [AnyStruct], fun (t: AnyStruct): Bool {
+        var token = t as! Token
+        return token.id <= 2
+    })
+
+    // Assert
+    assert((result[0] as! Token).id == 0)
+    assert((result[1] as! Token).id == 1)
+    assert((result[2] as! Token).id == 2)
+}
+
+pub fun testMap() {
+    // Arrange
+    let tokens = [
+        Token(id: 0, balance: 10),
+        Token(id: 1, balance: 5),
+        Token(id: 2, balance: 15)
+    ]
+
+    // Act
+    let mapped = arrayUtils.map(tokens as [AnyStruct], fun (t: AnyStruct): AnyStruct {
+        var token = t as! Token
+        token.balance = token.balance - 2
+        return token
+    })
+
+    // Assert
+    assert((mapped[0] as! Token).balance == 8)
+    assert((mapped[1] as! Token).balance == 3)
+    assert((mapped[2] as! Token).balance == 13)
+}
+
+pub fun testMapStrings() {
+    // Arrange
+    let strings = ["Peter", "John", "Mark"]
+
+    // Act
+    let mapped = arrayUtils.mapStrings(strings, fun (s: String): String {
+        return "Hello, ".concat(s).concat("!")
+    })
+
+    // Assert
+    assert(mapped[0] == "Hello, Peter!")
+    assert(mapped[1] == "Hello, John!")
+    assert(mapped[2] == "Hello, Mark!")
+}
+
+pub fun testReduce() {
+    // Arrange
+    let tokens = [
+        Token(id: 0, balance: 10),
+        Token(id: 1, balance: 5),
+        Token(id: 2, balance: 15)
+    ]
+    let initial = Token(id: 5, balance: 0) as AnyStruct
+
+    // Act
+    let token = arrayUtils.reduce(tokens as [AnyStruct], initial, fun (acc: AnyStruct, t: AnyStruct): AnyStruct {
+        var token = t as! Token
+        var accToken = acc as! Token
+        accToken.balance = accToken.balance + token.balance
+        return accToken
+    })
+
+    // Assert
+    assert((token as! Token).balance == 30)
+}
