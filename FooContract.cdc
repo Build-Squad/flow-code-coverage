@@ -1,5 +1,4 @@
 pub contract FooContract {
-    init() {}
 
     pub fun getIntegerTrait(_ n: Int): String {
         if n < 0 {
@@ -16,4 +15,5 @@ pub contract FooContract {
 
         return "Enormous"
     }
+
 }

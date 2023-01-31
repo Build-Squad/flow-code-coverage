@@ -1,6 +1,6 @@
 import FooContract from "./FooContract.cdc"
 
-pub fun testTrait() {
+pub fun testGetIntegerTrait() {
     // Arrange
     let testInputs: {Int: String} = {
         -1: "Negative",
