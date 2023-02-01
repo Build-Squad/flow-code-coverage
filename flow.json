@@ -7,7 +7,8 @@
   },
   "contracts": {
     "FooContract": "./FooContract.cdc",
-    "ArrayUtils": "./ArrayUtils.cdc"
+    "ArrayUtils": "./ArrayUtils.cdc",
+    "StringUtils": "./StringUtils.cdc"
   },
   "networks": {
     "emulator": "127.0.0.1:3569"
@@ -22,7 +23,8 @@
     "emulator": {
       "emulator-account": [
         "FooContract",
-        "ArrayUtils"
+        "ArrayUtils",
+        "StringUtils"
       ]
     }
   }

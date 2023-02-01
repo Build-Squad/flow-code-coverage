@@ -89,3 +89,29 @@ Coverage: 90.6% of statements
 ```
 
 Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.
+
+And also:
+
+```bash
+bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_string_utils.cdc
+
+Running tests...
+
+Test results:
+- PASS: testFormat
+- PASS: testExplode
+- PASS: testTrimLeft
+- PASS: testTrim
+- PASS: testReplaceAll
+- PASS: testHasPrefix
+- PASS: testHasSuffix
+- PASS: testIndex
+- PASS: testCount
+- PASS: testContains
+- PASS: testSubstringUntil
+- PASS: testSplit
+- PASS: testJoin
+Coverage: 100.0% of statements
+```
+
+Look at the files `StringUtils.cdc` (smart contract) and `test_string_utils.cdc` (tests for the smart contract).
