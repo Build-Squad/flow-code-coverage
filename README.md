@@ -15,7 +15,7 @@ The output will look something like this:
 ```bash
 Running tests...
 
-Test results:
+Test results: (test_foo_contract.cdc)
 - PASS: testGetIntegerTrait
 Coverage: 81.8% of statements
 ```
@@ -66,7 +66,7 @@ bin/flow-x86_64-linux- test --cover test_foo_contract.cdc
 
 Running tests...
 
-Test results:
+Test results: (test_foo_contract.cdc)
 - PASS: testGetIntegerTrait
 Coverage: 100.0% of statements
 ```
@@ -74,30 +74,20 @@ Coverage: 100.0% of statements
 For some more realistic contracts and tests:
 
 ```bash
-bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_array_utils.cdc
+bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_array_utils.cdc test_string_utils.cdc
 
 Running tests...
 
-Test results:
+Running tests...
+
+Test results: (test_array_utils.cdc)
 - PASS: testRange
 - PASS: testTransform
 - PASS: testIterate
 - PASS: testMap
 - PASS: testMapStrings
 - PASS: testReduce
-Coverage: 90.6% of statements
-```
-
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.
-
-And also:
-
-```bash
-bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_string_utils.cdc
-
-Running tests...
-
-Test results:
+Test results: (test_string_utils.cdc)
 - PASS: testFormat
 - PASS: testExplode
 - PASS: testTrimLeft
@@ -111,7 +101,9 @@ Test results:
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Coverage: 100.0% of statements
+Coverage: 96.3% of statements
 ```
 
-Look at the files `StringUtils.cdc` (smart contract) and `test_string_utils.cdc` (tests for the smart contract).
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.
+
+Also, look at the files `StringUtils.cdc` (smart contract) and `test_string_utils.cdc` (tests for the smart contract).
