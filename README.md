@@ -85,7 +85,7 @@ Test results:
 - PASS: testMap
 - PASS: testMapStrings
 - PASS: testReduce
-Coverage: 100.0% of statements
+Coverage: 90.6% of statements
 ```
 
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract).
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.

@@ -2,9 +2,16 @@ pub contract ArrayUtils {
 
     pub fun rangeFunc(_ start: Int, _ end: Int, _ f: ((Int):Void)) {
         var current = start
-        while current < end {
-            f(current)
-            current = current + 1
+        if start > end {
+            while current > end {
+                f(current)
+                current = current - 1
+            }
+        } else {
+            while current < end {
+                f(current)
+                current = current + 1
+            }
         }
     }
 
@@ -41,7 +48,7 @@ pub contract ArrayUtils {
         return res
     }
 
-    pub fun mapStrings(_ array: [String], _ f: ((String): String) ): [String] {
+    pub fun mapStrings(_ array: [String], _ f: ((String): String)): [String] {
         var res: [String] = []
         for item in array {
             res.append(f(item))
