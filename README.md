@@ -78,8 +78,6 @@ bin/flow-x86_64-linux- test --cover --coverprofile=coverage.json test_array_util
 
 Running tests...
 
-Running tests...
-
 Test results: (test_array_utils.cdc)
 - PASS: testRange
 - PASS: testTransform
