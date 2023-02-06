@@ -17,7 +17,8 @@ Running tests...
 
 Test results: (test_foo_contract.cdc)
 - PASS: testGetIntegerTrait
-Coverage: 81.8% of statements
+- PASS: testAddSpecialNumber
+Coverage: 93.3% of statements
 ```
 
 It looks like not all statements were covered by the test inputs. To view details for the coverage report,
@@ -34,32 +35,35 @@ With the above flag, a `coverage.json` file was generated.
   "coverage": {
     "S../FooContract.cdc": {
       "line_hits": {
-        "10": 1,
-        "11": 0,
-        "12": 1,
-        "13": 0,
-        "16": 1,
-        "4": 4,
-        "5": 1,
-        "6": 3,
-        "7": 1,
-        "8": 2,
-        "9": 1
+        "14": 1,
+        "18": 8,
+        "19": 1,
+        "20": 7,
+        "21": 1,
+        "22": 6,
+        "23": 1,
+        "24": 5,
+        "25": 1,
+        "26": 4,
+        "27": 0,
+        "30": 4,
+        "31": 3,
+        "34": 1,
+        "6": 1
       },
       "missed_lines": [
-        11,
-        13
+        27
       ],
-      "statements": 11,
-      "percentage": "81.8%"
+      "statements": 15,
+      "percentage": "93.3%"
     }
   }
 }
 ```
 
-Reading the JSON file, we can see that for the `FooContract.cdc` the lines `11`, `13` were missed during the tests (not covered by the test inputs).
+Reading the JSON file, we can see that for the `FooContract.cdc` the line `27` was missed during the tests (not covered by the test inputs).
 
-To fix that, we can tweak the `testInputs` Dictionary on `test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the lines `10` and `11`, we now get:
+To fix that, we can tweak the `testInputs` Dictionary on `test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `13`, we now get:
 
 ```bash
 bin/flow-x86_64-linux- test --cover test_foo_contract.cdc
@@ -68,6 +72,7 @@ Running tests...
 
 Test results: (test_foo_contract.cdc)
 - PASS: testGetIntegerTrait
+- PASS: testAddSpecialNumber
 Coverage: 100.0% of statements
 ```
 
