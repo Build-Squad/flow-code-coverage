@@ -14,13 +14,21 @@ pub(set) var arrayUtils = ArrayUtils()
 
 pub fun testRange() {
     // Act
-    let range = arrayUtils.range(0, 10)
+    var range = arrayUtils.range(0, 10)
 
     // Assert
-    let expected: [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    var expected: [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     for i in expected {
         assert(range.contains(i))
     }
+
+    // TODO: Uncomment the lines below to see the code coverage change
+    // range = arrayUtils.range(10, 0)
+
+    // expected = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    // for i in expected {
+    //     assert(range.contains(i))
+    // }
 }
 
 pub fun testTransform() {
