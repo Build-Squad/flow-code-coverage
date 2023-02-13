@@ -6,9 +6,9 @@
     }
   },
   "contracts": {
-    "FooContract": "./FooContract.cdc",
-    "ArrayUtils": "./ArrayUtils.cdc",
-    "StringUtils": "./StringUtils.cdc"
+    "FooContract": "FooContract.cdc",
+    "ArrayUtils": "ArrayUtils.cdc",
+    "StringUtils": "StringUtils.cdc"
   },
   "networks": {
     "emulator": "127.0.0.1:3569"

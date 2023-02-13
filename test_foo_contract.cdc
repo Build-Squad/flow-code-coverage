@@ -1,4 +1,4 @@
-import FooContract from "./FooContract.cdc"
+import FooContract from "FooContract.cdc"
 
 pub let foo = FooContract()
 
