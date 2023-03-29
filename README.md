@@ -1,13 +1,26 @@
 # Code Coverage Support for Flow Emulator
 
+## Requirements
+
+Make sure that you have installed the minimum required version of `flow-cli`:
+
+```bash
+flow version
+
+Version: v0.47.0
+Commit: 388ea9cd23106e01894368e19ea7de7278cad60a
+```
+
+To install it, simply run:
+
+```bash
+sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v0.47.0
+```
+
 To view coverage results when running our tests, we can use:
 
 ```bash
-# On Linux
-bin/flow-x86_64-linux- test --cover test_foo_contract.cdc
-
-# On Mac
-bin/flow-x86_64-darwin- test --cover test_foo_contract.cdc
+flow test --cover test_foo_contract.cdc
 ```
 
 The output will look something like this:
@@ -58,7 +71,7 @@ we can consult the auto-generated `coverage.json` file:
 Note: We can use the `--coverprofile` flag if we wish to generate the coverage report to a different file.
 
 ```bash
-bin/flow-x86_64-linux- test --cover --coverprofile=codecov.json test_foo_contract.cdc
+flow test --cover --coverprofile=codecov.json test_foo_contract.cdc
 ```
 
 Reading the JSON file, we can see that for `FooContract.cdc` the line `27` was missed during the tests (not covered by the test inputs).
@@ -66,7 +79,7 @@ Reading the JSON file, we can see that for `FooContract.cdc` the line `27` was m
 To fix that, we can tweak the `testInputs` Dictionary on `test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `13`, we now get:
 
 ```bash
-bin/flow-x86_64-linux- test --cover test_foo_contract.cdc
+flow test --cover test_foo_contract.cdc
 
 Running tests...
 
@@ -79,10 +92,17 @@ Coverage: 100.0% of statements
 For some more realistic contracts and tests:
 
 ```bash
-bin/flow-x86_64-linux- test --cover test_array_utils.cdc test_string_utils.cdc
+flow test --cover test_array_utils.cdc test_string_utils.cdc
 
 Running tests...
 
+Test results: "test_array_utils.cdc"
+- PASS: testRange
+- PASS: testTransform
+- PASS: testIterate
+- PASS: testMap
+- PASS: testMapStrings
+- PASS: testReduce
 Test results: "test_string_utils.cdc"
 - PASS: testFormat
 - PASS: testExplode
@@ -97,13 +117,6 @@ Test results: "test_string_utils.cdc"
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Test results: "test_array_utils.cdc"
-- PASS: testRange
-- PASS: testTransform
-- PASS: testIterate
-- PASS: testMap
-- PASS: testMapStrings
-- PASS: testReduce
 Coverage: 96.3% of statements
 ```
 
