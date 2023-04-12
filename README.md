@@ -1,4 +1,4 @@
-# Code Coverage Support for Flow Emulator
+# Cadence Code Coverage
 
 ## Requirements
 
@@ -17,7 +17,9 @@ To install it, simply run:
 sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v0.47.0
 ```
 
-To view coverage results when running our tests, we can use:
+## For Testing
+
+To view code coverage results when running our tests, we can use:
 
 ```bash
 flow test --cover test_foo_contract.cdc
@@ -155,3 +157,37 @@ The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was 
 For viewing the coverage report of the `StringUtils` smart contract, we can just consult the value of the `A.01cf0e2f2f715450.StringUtils` key, in the `coverage.json` file.
 
 The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.
+
+## For Emulator
+
+It is also possible to view code coverage through the emulator, outside the context of testing.
+
+All we have to do is start the emulator with the necessary flag (`coverage-reporting`):
+
+```bash
+flow emulator --storage-limit=false --coverage-reporting -v
+```
+
+With this, we can use our browser and visit http://localhost:8080/emulator/codeCoverage.
+
+This code coverage report will reflect every interaction with the emulator. For example, we can deploy contracts to the emulator, run scripts/transactions against them and view the results:
+
+```bash
+flow deploy contracts --network=emulator
+
+flow scripts execute foo_contract_scripts.cdc --network=emulator
+```
+
+![Emulator Code Coverage](./emulator-code-coverage.png)
+
+We can also flush/reset the collected code coverage report, with:
+
+```bash
+curl -XPUT 'http://localhost:8080/emulator/codeCoverage/reset'
+```
+
+Which results in the following:
+
+![Code Coverage Reset](./code-coverage-reset.png)
+
+All of the keys have disappeared, except for the `A.f8d6e0586b0a20c7.FlowServiceAccount`, which is a system contract that runs frequently some operations.
