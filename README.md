@@ -193,4 +193,4 @@ Which results in the following:
 
 ![Code Coverage Reset](./code-coverage-reset.png)
 
-All of the keys have disappeared, except for the `A.f8d6e0586b0a20c7.FlowServiceAccount`, which is a system contract that runs frequently some operations.
+All of the keys have disappeared, except for `A.f8d6e0586b0a20c7.FlowServiceAccount`, which is a system contract that is essential to the operations of Flow.
