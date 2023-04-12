@@ -113,7 +113,8 @@ Test results: "test_array_utils.cdc"
 Coverage: 90.6% of statements
 ```
 
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader. Look at the comment on line 25 in `test_array_utils.cdc`.
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). 
+For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 25 in `test_array_utils.cdc`.
 
 Note that the above examples of tests could be best described as unit tests.
 
