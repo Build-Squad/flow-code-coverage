@@ -151,7 +151,9 @@ The generated `coverage.json` file is somewhat more elaborate, for integration t
 - `A.ee82856bf20e2aa6.FungibleToken`
 - `A.f8d6e0586b0a20c7.FlowServiceAccount`
 
-and some other locations. The ones starting with `s.*` are scripts, while the ones starting with `t.*` are transactions.
+and some other locations.
+
+Locations that start with `A.` are contracts deployed to an account, ones that start with `s.` are scripts, and ones that start with `t.` are transactions.
 
 The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was deployed on the integration tests, and that's why it is included in the resulting coverage report.
 
