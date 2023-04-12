@@ -64,7 +64,12 @@ we can consult the auto-generated `coverage.json` file:
       "statements": 15,
       "percentage": "93.3%"
     }
-  }
+  },
+  "excluded_locations": [
+    "I.Crypto",
+    "I.Test",
+    "s.7465737400000000000000000000000000000000000000000000000000000000"
+  ]
 }
 ```
 
