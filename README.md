@@ -97,7 +97,7 @@ Coverage: 100.0% of statements
 For some more realistic contracts and tests:
 
 ```bash
-flow test --cover test_array_utils.cdc test_string_utils.cdc
+flow test --cover test_array_utils.cdc
 
 Running tests...
 
@@ -108,6 +108,20 @@ Test results: "test_array_utils.cdc"
 - PASS: testMap
 - PASS: testMapStrings
 - PASS: testReduce
+Coverage: 90.6% of statements
+```
+
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader. Look at the comment on line 25 in `test_array_utils.cdc`.
+
+Note that the above examples of tests could be best described as unit tests.
+
+An example of integration tests can be found in the `test_string_utils.cdc` file, which tests the functionality of the `StringUtils.cdc` smart contract.
+
+```bash
+flow test --cover test_string_utils.cdc
+
+Running tests...
+
 Test results: "test_string_utils.cdc"
 - PASS: testFormat
 - PASS: testExplode
@@ -122,9 +136,22 @@ Test results: "test_string_utils.cdc"
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Coverage: 96.3% of statements
+Coverage: 55.5% of statements
 ```
 
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.
+The generated `coverage.json` file is somewhat more elaborate, for integration tests. By viewing its content, we find the following keys:
 
-Also, look at the files `StringUtils.cdc` (smart contract) and `test_string_utils.cdc` (tests for the smart contract).
+- `A.01cf0e2f2f715450.ArrayUtils`
+- `A.01cf0e2f2f715450.StringUtils`
+- `A.0ae53cb6e3f42a79.FlowToken`
+- `A.e5a8b7f23e8b548f.FlowFees`
+- `A.ee82856bf20e2aa6.FungibleToken`
+- `A.f8d6e0586b0a20c7.FlowServiceAccount`
+
+and some other locations. The ones starting with `s.*` are scripts, while the ones starting with `t.*` are transactions.
+
+The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was deployed on the integration tests, and that's why it is included in the resulting coverage report.
+
+For viewing the coverage report of the `StringUtils` smart contract, we can just consult the value of the `A.01cf0e2f2f715450.StringUtils` key, in the `coverage.json` file.
+
+The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.

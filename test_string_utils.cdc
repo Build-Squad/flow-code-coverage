@@ -1,149 +1,105 @@
-import StringUtils from "StringUtils.cdc"
+import Test
 
-pub(set) var stringUtils = StringUtils()
+pub var blockchain = Test.newEmulatorBlockchain()
+pub var account = blockchain.createAccount()
+
+pub fun setup() {
+    blockchain.useConfiguration(Test.Configuration({
+        "ArrayUtils.cdc": account.address,
+        "StringUtils.cdc": account.address
+    }))
+
+    var arrayUtils = Test.readFile("ArrayUtils.cdc")
+    var err = blockchain.deployContract(
+        name: "ArrayUtils",
+        code: arrayUtils,
+        account: account,
+        arguments: []
+    )
+
+    assert(err == nil)
+
+    var stringUtils = Test.readFile("StringUtils.cdc")
+    err = blockchain.deployContract(
+        name: "StringUtils",
+        code: stringUtils,
+        account: account,
+        arguments: []
+    )
+
+    assert(err == nil)
+}
 
 pub fun testFormat() {
-    // Act
-    var result = stringUtils.format("Hello, {name}!", {"name": "Peter"})
-
-    // Assert
-    assert(result == "Hello, Peter!")
+    let returnedValue = executeScript("string_utils_format.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testExplode() {
-    // Act
-    var result = stringUtils.explode("Hello!")
-
-    // Assert
-    var expected = ["H", "e", "l", "l", "o", "!"]
-    for char in expected {
-        assert(result.contains(char))
-    }
+    let returnedValue = executeScript("string_utils_explode.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testTrimLeft() {
-    // Act
-    var result = stringUtils.trimLeft("    Hello, World!")
-
-    // Assert
-    assert(result == "Hello, World!")
-
-    // Act
-    result = stringUtils.trimLeft("")
-
-    // Assert
-    assert(result == "")
+    let returnedValue = executeScript("string_utils_trim_left.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testTrim() {
-    // Act
-    var result = stringUtils.trim("  Hello, World!")
-
-    // Assert
-    assert(result == "Hello, World!")
+    let returnedValue = executeScript("string_utils_trim.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testReplaceAll() {
-    // Act
-    var result = stringUtils.replaceAll("Hello, World!", "l", "L")
-
-    // Assert
-    assert(result == "HeLLo, WorLd!")
+    let returnedValue = executeScript("string_utils_replace_all.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testHasPrefix() {
-    // Act
-    var result = stringUtils.hasPrefix("Hello, World!", "Hell")
-
-    // Assert
-    assert(result)
-
-    // Act
-    result = stringUtils.hasPrefix("Hell", "Hello, World!")
-
-    // Assert
-    assert(result == false)
+    let returnedValue = executeScript("string_utils_has_prefix.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testHasSuffix() {
-    // Act
-    var result = stringUtils.hasSuffix("Hello, World!", "ld!")
-
-    // Assert
-    assert(result)
-
-    // Act
-    result = stringUtils.hasSuffix("ld!", "Hello, World!")
-
-    // Assert
-    assert(result == false)
+    let returnedValue = executeScript("string_utils_has_suffix.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testIndex() {
-    // Act
-    var result = stringUtils.index("Hello, Peter!", "Peter", 0)
-
-    // Assert
-    assert(result == 7)
-
-    // Act
-    result = stringUtils.index("Hello, Peter!", "Mark", 0)
-
-    // Assert
-    assert(result == nil)
+    let returnedValue = executeScript("string_utils_index.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testCount() {
-    // Act
-    var result = stringUtils.count("Hello, World!", "o")
-
-    // Assert
-    assert(result == 2)
+    let returnedValue = executeScript("string_utils_count.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testContains() {
-    // Act
-    var result = stringUtils.contains("Hello, World!", "orl")
-
-    // Assert
-    assert(result)
-
-    // Act
-    result = stringUtils.contains("Hello, World!", "wow")
-
-    // Assert
-    assert(result == false)
+    let returnedValue = executeScript("string_utils_contains.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testSubstringUntil() {
-    // Act
-    var result = stringUtils.substringUntil("Hello, sir. How are you today?", ".", 0)
-
-    // Assert
-    assert(result == "Hello, sir")
-
-    // Act
-    result = stringUtils.substringUntil("Hello, sir!", ".", 0)
-
-    // Assert
-    assert(result == "Hello, sir!")
+    let returnedValue = executeScript("string_utils_substring_until.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testSplit() {
-    // Act
-    var result = stringUtils.split("Hello,How,Are,You? Today", ",")
-
-    // Assert
-    var expected = ["Hello", "How", "Are", "You? Today"]
-    for e in expected {
-        assert(result.contains(e))
-    }
+    let returnedValue = executeScript("string_utils_split.cdc")
+    assert(returnedValue, message: "found: false")
 }
 
 pub fun testJoin() {
-    // Act
-    var result = stringUtils.join(["Hello", "How", "Are", "You", "Today?"], " ")
+    let returnedValue = executeScript("string_utils_join.cdc")
+    assert(returnedValue, message: "found: false")
+}
 
-    // Assert
-    assert(result == "Hello How Are You Today?")
+priv fun executeScript(_ scriptPath: String): Bool {
+    var script = Test.readFile(scriptPath)
+    let value = blockchain.executeScript(script, [])
+
+    assert(value.status == Test.ResultStatus.succeeded)
+
+    return value.returnValue! as! Bool
 }
