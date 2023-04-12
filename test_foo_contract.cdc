@@ -1,3 +1,4 @@
+import Test
 import FooContract from "FooContract.cdc"
 
 pub let foo = FooContract()
@@ -22,7 +23,7 @@ pub fun testGetIntegerTrait() {
         let result = foo.getIntegerTrait(input)
 
         // Assert
-        assert(result == testInputs[input])
+        Test.assert(result == testInputs[input])
     }
 }
 
@@ -31,5 +32,5 @@ pub fun testAddSpecialNumber() {
     foo.addSpecialNumber(78557, "Sierpinski")
 
     // Assert
-    assert("Sierpinski" == foo.getIntegerTrait(78557))
+    Test.assert("Sierpinski" == foo.getIntegerTrait(78557))
 }

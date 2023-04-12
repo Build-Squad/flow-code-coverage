@@ -1,3 +1,4 @@
+import Test
 import ArrayUtils from "ArrayUtils.cdc"
 
 pub struct Token {
@@ -19,7 +20,7 @@ pub fun testRange() {
     // Assert
     var expected: [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     for i in expected {
-        assert(range.contains(i))
+        Test.assert(range.contains(i))
     }
 
     // TODO: Uncomment the lines below to see the code coverage change
@@ -27,7 +28,7 @@ pub fun testRange() {
 
     // expected = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     // for i in expected {
-    //     assert(range.contains(i))
+    //     Test.assert(range.contains(i))
     // }
 }
 
@@ -47,9 +48,9 @@ pub fun testTransform() {
     })
 
     // Assert
-    assert(tokens[0].balance == 20)
-    assert(tokens[1].balance == 10)
-    assert(tokens[2].balance == 30)
+    Test.assert(tokens[0].balance == 20)
+    Test.assert(tokens[1].balance == 10)
+    Test.assert(tokens[2].balance == 30)
 }
 
 pub fun testIterate() {
@@ -69,9 +70,9 @@ pub fun testIterate() {
     })
 
     // Assert
-    assert((result[0] as! Token).id == 0)
-    assert((result[1] as! Token).id == 1)
-    assert((result[2] as! Token).id == 2)
+    Test.assert((result[0] as! Token).id == 0)
+    Test.assert((result[1] as! Token).id == 1)
+    Test.assert((result[2] as! Token).id == 2)
 }
 
 pub fun testMap() {
@@ -90,9 +91,9 @@ pub fun testMap() {
     })
 
     // Assert
-    assert((mapped[0] as! Token).balance == 8)
-    assert((mapped[1] as! Token).balance == 3)
-    assert((mapped[2] as! Token).balance == 13)
+    Test.assert((mapped[0] as! Token).balance == 8)
+    Test.assert((mapped[1] as! Token).balance == 3)
+    Test.assert((mapped[2] as! Token).balance == 13)
 }
 
 pub fun testMapStrings() {
@@ -105,9 +106,9 @@ pub fun testMapStrings() {
     })
 
     // Assert
-    assert(mapped[0] == "Hello, Peter!")
-    assert(mapped[1] == "Hello, John!")
-    assert(mapped[2] == "Hello, Mark!")
+    Test.assert(mapped[0] == "Hello, Peter!")
+    Test.assert(mapped[1] == "Hello, John!")
+    Test.assert(mapped[2] == "Hello, Mark!")
 }
 
 pub fun testReduce() {
@@ -128,5 +129,5 @@ pub fun testReduce() {
     })
 
     // Assert
-    assert((token as! Token).balance == 30)
+    Test.assert((token as! Token).balance == 30)
 }
