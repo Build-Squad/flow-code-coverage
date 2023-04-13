@@ -1,3 +1,5 @@
+import ArrayUtils from "ArrayUtils.cdc"
+
 pub contract StringUtils {
 
     pub fun format(_ s: String, _ args: {String: String}): String {
@@ -10,15 +12,15 @@ pub contract StringUtils {
 
     pub fun explode(_ s: String): [String] {
         var chars: [String] = []
-        for i in self.range(0, s.length) {
+        for i in ArrayUtils.range(0, s.length) {
             chars.append(s[i].toString())
         }
         return chars
     }
 
     pub fun trimLeft(_ s: String): String {
-        for i in self.range(0, s.length) {
-            if s[i] != " "{
+        for i in ArrayUtils.range(0, s.length) {
+            if s[i] != " " {
                 return s.slice(from: i, upTo: s.length)
             }
         }
@@ -42,7 +44,7 @@ pub contract StringUtils {
     }
 
     pub fun index(_ s: String, _ substr: String, _ startIndex: Int): Int? {
-        for i in self.range(startIndex, s.length - substr.length + 1) {
+        for i in ArrayUtils.range(startIndex, s.length - substr.length + 1) {
             if s[i] == substr[0] && s.slice(from: i, upTo: i + substr.length) == substr {
                 return i
             }
@@ -89,22 +91,6 @@ pub contract StringUtils {
             joinedStr = joinedStr.concat(s).concat(separator)
         }
         return joinedStr.slice(from: 0, upTo: joinedStr.length - separator.length)
-    }
-
-    priv fun rangeFunc(_ start: Int, _ end: Int, _ f: ((Int):Void)) {
-        var current = start
-        while current < end {
-            f(current)
-            current = current + 1
-        }
-    }
-
-    priv fun range(_ start: Int, _ end: Int): [Int] {
-        var res: [Int] = []
-        self.rangeFunc(start, end, fun (i: Int) {
-            res.append(i)
-        })
-        return res
     }
 
 }

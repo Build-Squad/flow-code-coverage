@@ -1,4 +1,4 @@
-# Code Coverage Support for Flow Emulator
+# Cadence Code Coverage
 
 ## Requirements
 
@@ -7,17 +7,19 @@ Make sure that you have installed the minimum required version of `flow-cli`:
 ```bash
 flow version
 
-Version: v0.47.0
+Version: v0.49.0
 Commit: 388ea9cd23106e01894368e19ea7de7278cad60a
 ```
 
 To install it, simply run:
 
 ```bash
-sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v0.47.0
+sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v0.49.0
 ```
 
-To view coverage results when running our tests, we can use:
+## For Testing
+
+To view code coverage results when running our tests, we can use:
 
 ```bash
 flow test --cover test_foo_contract.cdc
@@ -64,7 +66,12 @@ we can consult the auto-generated `coverage.json` file:
       "statements": 15,
       "percentage": "93.3%"
     }
-  }
+  },
+  "excluded_locations": [
+    "I.Crypto",
+    "I.Test",
+    "s.7465737400000000000000000000000000000000000000000000000000000000"
+  ]
 }
 ```
 
@@ -92,7 +99,7 @@ Coverage: 100.0% of statements
 For some more realistic contracts and tests:
 
 ```bash
-flow test --cover test_array_utils.cdc test_string_utils.cdc
+flow test --cover test_array_utils.cdc
 
 Running tests...
 
@@ -103,6 +110,21 @@ Test results: "test_array_utils.cdc"
 - PASS: testMap
 - PASS: testMapStrings
 - PASS: testReduce
+Coverage: 90.6% of statements
+```
+
+Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). 
+For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 25 in `test_array_utils.cdc`.
+
+Note that the above examples of tests could be best described as unit tests.
+
+An example of integration tests can be found in the `test_string_utils.cdc` file, which tests the functionality of the `StringUtils.cdc` smart contract.
+
+```bash
+flow test --cover test_string_utils.cdc
+
+Running tests...
+
 Test results: "test_string_utils.cdc"
 - PASS: testFormat
 - PASS: testExplode
@@ -117,9 +139,58 @@ Test results: "test_string_utils.cdc"
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Coverage: 96.3% of statements
+Coverage: 55.5% of statements
 ```
 
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). For the `ArrayUtils.range` method, we have omitted in purpose the branch where `start > end`. It is left as an exercise to the reader.
+The generated `coverage.json` file is somewhat more elaborate, for integration tests. By viewing its content, we find the following keys:
 
-Also, look at the files `StringUtils.cdc` (smart contract) and `test_string_utils.cdc` (tests for the smart contract).
+- `A.01cf0e2f2f715450.ArrayUtils`
+- `A.01cf0e2f2f715450.StringUtils`
+- `A.0ae53cb6e3f42a79.FlowToken`
+- `A.e5a8b7f23e8b548f.FlowFees`
+- `A.ee82856bf20e2aa6.FungibleToken`
+- `A.f8d6e0586b0a20c7.FlowServiceAccount`
+
+and some other locations.
+
+Locations that start with `A.` are contracts deployed to an account, ones that start with `s.` are scripts, and ones that start with `t.` are transactions.
+
+The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was deployed on the integration tests, and that's why it is included in the resulting coverage report.
+
+For viewing the coverage report of the `StringUtils` smart contract, we can just consult the value of the `A.01cf0e2f2f715450.StringUtils` key, in the `coverage.json` file.
+
+The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.
+
+## For Emulator
+
+It is also possible to view code coverage through the emulator, outside the context of testing.
+
+All we have to do is start the emulator with the necessary flag (`coverage-reporting`):
+
+```bash
+flow emulator --storage-limit=false --coverage-reporting -v
+```
+
+With this, we can use our browser and visit http://localhost:8080/emulator/codeCoverage.
+
+This code coverage report will reflect every interaction with the emulator. For example, we can deploy contracts to the emulator, run scripts/transactions against them and view the results:
+
+```bash
+flow deploy contracts --network=emulator
+
+flow scripts execute foo_contract_scripts.cdc --network=emulator
+```
+
+![Emulator Code Coverage](./emulator-code-coverage.png)
+
+We can also flush/reset the collected code coverage report, with:
+
+```bash
+curl -XPUT 'http://localhost:8080/emulator/codeCoverage/reset'
+```
+
+Which results in the following:
+
+![Code Coverage Reset](./code-coverage-reset.png)
+
+All of the keys have disappeared, except for `A.f8d6e0586b0a20c7.FlowServiceAccount`, which is a system contract that is essential to the operations of Flow.
