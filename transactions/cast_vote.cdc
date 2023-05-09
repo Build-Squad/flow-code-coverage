@@ -1,4 +1,4 @@
-import ApprovalVoting from "ApprovalVoting.cdc"
+import ApprovalVoting from "../contracts/ApprovalVoting.cdc"
 
 // This transaction allows a voter to select the votes they would like to make
 // and cast that vote by using the `castVote` function of the ApprovalVoting

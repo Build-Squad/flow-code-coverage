@@ -1,4 +1,4 @@
-import ApprovalVoting from "ApprovalVoting.cdc"
+import ApprovalVoting from "../contracts/ApprovalVoting.cdc"
 
 // This transaction allows the administrator of the Voting contract
 // to create a new ballot and store it in a voter's account.

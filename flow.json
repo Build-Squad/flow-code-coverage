@@ -6,10 +6,10 @@
     }
   },
   "contracts": {
-    "FooContract": "FooContract.cdc",
-    "ArrayUtils": "ArrayUtils.cdc",
-    "StringUtils": "StringUtils.cdc",
-    "ApprovalVoting": "ApprovalVoting.cdc"
+    "FooContract": "./contracts/FooContract.cdc",
+    "ArrayUtils": "./contracts/ArrayUtils.cdc",
+    "StringUtils": "./contracts/StringUtils.cdc",
+    "ApprovalVoting": "./contracts/ApprovalVoting.cdc"
   },
   "networks": {
     "emulator": "127.0.0.1:3569"

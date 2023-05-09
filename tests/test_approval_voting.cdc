@@ -6,10 +6,10 @@ pub let voter = blockchain.createAccount()
 
 pub fun setup() {
     blockchain.useConfiguration(Test.Configuration({
-        "ApprovalVoting.cdc": admin.address
+        "../contracts/ApprovalVoting.cdc": admin.address
     }))
 
-    let code = Test.readFile("ApprovalVoting.cdc")
+    let code = Test.readFile("../contracts/ApprovalVoting.cdc")
     let err = blockchain.deployContract(
         name: "ApprovalVoting",
         code: code,
@@ -22,7 +22,7 @@ pub fun setup() {
 
 pub fun testInitializeEmptyProposals() {
     let proposals: [String] = []
-    let code = Test.readFile("initialize_proposals.cdc")
+    let code = Test.readFile("../transactions/initialize_proposals.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [admin.address],
@@ -44,7 +44,7 @@ pub fun testInitializeProposals() {
         "Longer Shot Clock",
         "Trampolines instead of hardwood floors"
     ]
-    let code = Test.readFile("initialize_proposals.cdc")
+    let code = Test.readFile("../transactions/initialize_proposals.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [admin.address],
@@ -59,7 +59,7 @@ pub fun testInitializeProposals() {
 
 pub fun testProposalsImmutability() {
     let proposals = ["Add some more options"]
-    let code = Test.readFile("initialize_proposals.cdc")
+    let code = Test.readFile("../transactions/initialize_proposals.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [admin.address],
@@ -77,7 +77,7 @@ pub fun testProposalsImmutability() {
 }
 
 pub fun testIssueBallot() {
-    let code = Test.readFile("issue_ballot.cdc")
+    let code = Test.readFile("../transactions/issue_ballot.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [admin.address, voter.address],
@@ -91,7 +91,7 @@ pub fun testIssueBallot() {
 }
 
 pub fun testCastVoteOnMissingProposal() {
-    let code = Test.readFile("cast_vote.cdc")
+    let code = Test.readFile("../transactions/cast_vote.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [voter.address],
@@ -109,7 +109,7 @@ pub fun testCastVoteOnMissingProposal() {
 }
 
 pub fun testCastVote() {
-    let code = Test.readFile("cast_vote.cdc")
+    let code = Test.readFile("../transactions/cast_vote.cdc")
     let tx = Test.Transaction(
         code: code,
         authorizers: [voter.address],
@@ -123,7 +123,7 @@ pub fun testCastVote() {
 }
 
 pub fun testViewVotes() {
-    let code = Test.readFile("view_votes.cdc")
+    let code = Test.readFile("../scripts/view_votes.cdc")
 
     var result = blockchain.executeScript(code, [])
     var votes = (result.returnValue as! {Int: Int}?)!

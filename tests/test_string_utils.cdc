@@ -6,10 +6,10 @@ pub var account = blockchain.createAccount()
 pub fun setup() {
     blockchain.useConfiguration(Test.Configuration({
         "ArrayUtils.cdc": account.address,
-        "StringUtils.cdc": account.address
+        "../contracts/StringUtils.cdc": account.address
     }))
 
-    var arrayUtils = Test.readFile("ArrayUtils.cdc")
+    var arrayUtils = Test.readFile("../contracts/ArrayUtils.cdc")
     var err = blockchain.deployContract(
         name: "ArrayUtils",
         code: arrayUtils,
@@ -19,7 +19,7 @@ pub fun setup() {
 
     Test.assert(err == nil)
 
-    var stringUtils = Test.readFile("StringUtils.cdc")
+    var stringUtils = Test.readFile("../contracts/StringUtils.cdc")
     err = blockchain.deployContract(
         name: "StringUtils",
         code: stringUtils,
@@ -31,67 +31,67 @@ pub fun setup() {
 }
 
 pub fun testFormat() {
-    let returnedValue = executeScript("string_utils_format.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_format.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testExplode() {
-    let returnedValue = executeScript("string_utils_explode.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_explode.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testTrimLeft() {
-    let returnedValue = executeScript("string_utils_trim_left.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_trim_left.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testTrim() {
-    let returnedValue = executeScript("string_utils_trim.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_trim.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testReplaceAll() {
-    let returnedValue = executeScript("string_utils_replace_all.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_replace_all.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testHasPrefix() {
-    let returnedValue = executeScript("string_utils_has_prefix.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_has_prefix.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testHasSuffix() {
-    let returnedValue = executeScript("string_utils_has_suffix.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_has_suffix.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testIndex() {
-    let returnedValue = executeScript("string_utils_index.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_index.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testCount() {
-    let returnedValue = executeScript("string_utils_count.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_count.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testContains() {
-    let returnedValue = executeScript("string_utils_contains.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_contains.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testSubstringUntil() {
-    let returnedValue = executeScript("string_utils_substring_until.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_substring_until.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testSplit() {
-    let returnedValue = executeScript("string_utils_split.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_split.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 
 pub fun testJoin() {
-    let returnedValue = executeScript("string_utils_join.cdc")
+    let returnedValue = executeScript("../scripts/string_utils_join.cdc")
     Test.assert(returnedValue, message: "found: false")
 }
 

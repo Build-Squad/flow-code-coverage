@@ -22,15 +22,13 @@ sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/in
 To view code coverage results when running our tests, we can use:
 
 ```bash
-flow test --cover test_foo_contract.cdc
+flow test --cover tests/test_foo_contract.cdc
 ```
 
 The output will look something like this:
 
 ```bash
-Running tests...
-
-Test results: "test_foo_contract.cdc"
+Test results: "tests/test_foo_contract.cdc"
 - PASS: testGetIntegerTrait
 - PASS: testAddSpecialNumber
 Coverage: 93.3% of statements
@@ -42,7 +40,7 @@ we can consult the auto-generated `coverage.json` file:
 ```json
 {
   "coverage": {
-    "S.FooContract.cdc": {
+    "S.../contracts/FooContract.cdc": {
       "line_hits": {
         "14": 1,
         "18": 9,
@@ -68,9 +66,9 @@ we can consult the auto-generated `coverage.json` file:
     }
   },
   "excluded_locations": [
+    "s.7465737400000000000000000000000000000000000000000000000000000000",
     "I.Crypto",
-    "I.Test",
-    "s.7465737400000000000000000000000000000000000000000000000000000000"
+    "I.Test"
   ]
 }
 ```
@@ -78,19 +76,17 @@ we can consult the auto-generated `coverage.json` file:
 Note: We can use the `--coverprofile` flag if we wish to generate the coverage report to a different file.
 
 ```bash
-flow test --cover --coverprofile=codecov.json test_foo_contract.cdc
+flow test --cover --coverprofile=codecov.json tests/test_foo_contract.cdc
 ```
 
-Reading the JSON file, we can see that for `FooContract.cdc` the line `27` was missed during the tests (not covered by the test inputs).
+Reading the JSON file, we can see that for `FooContract` the line `27` was missed during the tests (not covered by the test inputs).
 
-To fix that, we can tweak the `testInputs` Dictionary on `test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `13`, we now get:
+To fix that, we can tweak the `testInputs` Dictionary on `tests/test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `13`, we now get:
 
 ```bash
-flow test --cover test_foo_contract.cdc
+flow test --cover tests/test_foo_contract.cdc
 
-Running tests...
-
-Test results: "test_foo_contract.cdc"
+Test results: "tests/test_foo_contract.cdc"
 - PASS: testGetIntegerTrait
 - PASS: testAddSpecialNumber
 Coverage: 100.0% of statements
@@ -99,11 +95,9 @@ Coverage: 100.0% of statements
 For some more realistic contracts and tests:
 
 ```bash
-flow test --cover test_array_utils.cdc
+flow test --cover tests/test_array_utils.cdc
 
-Running tests...
-
-Test results: "test_array_utils.cdc"
+Test results: "tests/test_array_utils.cdc"
 - PASS: testRange
 - PASS: testTransform
 - PASS: testIterate
@@ -113,19 +107,17 @@ Test results: "test_array_utils.cdc"
 Coverage: 90.6% of statements
 ```
 
-Look at the files `ArrayUtils.cdc` (smart contract) and `test_array_utils.cdc` (tests for the smart contract). 
-For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 25 in `test_array_utils.cdc`.
+Look at the files `contracts/ArrayUtils.cdc` (smart contract) and `tests/test_array_utils.cdc` (tests for the smart contract).
+For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 25 in `tests/test_array_utils.cdc`.
 
 Note that the above examples of tests could be best described as unit tests.
 
-An example of integration tests can be found in the `test_string_utils.cdc` file, which tests the functionality of the `StringUtils.cdc` smart contract.
+An example of integration tests can be found in the `tests/test_string_utils.cdc` file, which tests the functionality of the `contracts/StringUtils.cdc` smart contract.
 
 ```bash
-flow test --cover test_string_utils.cdc
+flow test --cover tests/test_string_utils.cdc
 
-Running tests...
-
-Test results: "test_string_utils.cdc"
+Test results: "tests/test_string_utils.cdc"
 - PASS: testFormat
 - PASS: testExplode
 - PASS: testTrimLeft
@@ -139,7 +131,7 @@ Test results: "test_string_utils.cdc"
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Coverage: 55.5% of statements
+Coverage: 54.5% of statements
 ```
 
 The generated `coverage.json` file is somewhat more elaborate, for integration tests. By viewing its content, we find the following keys:
@@ -164,9 +156,9 @@ The rest of the keys are system contracts that are always available in the Flow 
 There is also a more advance example of integration tests for the `ApprovalVoting` smart contract, which deals with resources, multi-sig transactions etc.
 
 ```bash
-flow test --cover test_approval_voting.cdc
+flow test --cover tests/test_approval_voting.cdc
 
-Test results: "test_approval_voting.cdc"
+Test results: "tests/test_approval_voting.cdc"
 - PASS: testInitializeEmptyProposals
 - PASS: testInitializeProposals
 - PASS: testProposalsImmutability
@@ -184,7 +176,7 @@ It is also possible to view code coverage through the emulator, outside the cont
 All we have to do is start the emulator with the necessary flag (`coverage-reporting`):
 
 ```bash
-flow emulator --storage-limit=false --coverage-reporting -v
+flow emulator --storage-limit=false --coverage-reporting
 ```
 
 With this, we can use our browser and visit http://localhost:8080/emulator/codeCoverage.
@@ -194,7 +186,7 @@ This code coverage report will reflect every interaction with the emulator. For 
 ```bash
 flow deploy contracts --network=emulator
 
-flow scripts execute foo_contract_scripts.cdc --network=emulator
+flow scripts execute scripts/foo_contract_scripts.cdc --network=emulator
 ```
 
 ![Emulator Code Coverage](./emulator-code-coverage.png)

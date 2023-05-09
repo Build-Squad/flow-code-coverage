@@ -1,4 +1,4 @@
-import StringUtils from "StringUtils.cdc"
+import StringUtils from "../contracts/StringUtils.cdc"
 
 pub fun main(): Bool {
     // Act

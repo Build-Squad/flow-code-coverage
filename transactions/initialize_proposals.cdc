@@ -1,4 +1,4 @@
-import ApprovalVoting from "ApprovalVoting.cdc"
+import ApprovalVoting from "../contracts/ApprovalVoting.cdc"
 
 // This transaction allows the Administrator of the Voting contract
 // to create new proposals for voting and save them to the smart contract.

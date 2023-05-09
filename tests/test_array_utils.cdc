@@ -1,5 +1,5 @@
 import Test
-import ArrayUtils from "ArrayUtils.cdc"
+import ArrayUtils from "../contracts/ArrayUtils.cdc"
 
 pub struct Token {
     pub let id: Int

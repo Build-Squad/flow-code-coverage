@@ -1,4 +1,4 @@
-import FooContract from "FooContract.cdc"
+import FooContract from "../contracts/FooContract.cdc"
 
 pub fun main(): Bool {
     let testInputs: {Int: String} = {

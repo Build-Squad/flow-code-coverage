@@ -1,5 +1,5 @@
 import Test
-import FooContract from "FooContract.cdc"
+import FooContract from "../contracts/FooContract.cdc"
 
 pub let foo = FooContract()
 
