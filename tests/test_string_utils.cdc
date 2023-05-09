@@ -1,7 +1,7 @@
 import Test
 
-pub var blockchain = Test.newEmulatorBlockchain()
-pub var account = blockchain.createAccount()
+pub let blockchain = Test.newEmulatorBlockchain()
+pub let account = blockchain.createAccount()
 
 pub fun setup() {
     blockchain.useConfiguration(Test.Configuration({
@@ -9,7 +9,7 @@ pub fun setup() {
         "../contracts/StringUtils.cdc": account.address
     }))
 
-    var arrayUtils = Test.readFile("../contracts/ArrayUtils.cdc")
+    let arrayUtils = Test.readFile("../contracts/ArrayUtils.cdc")
     var err = blockchain.deployContract(
         name: "ArrayUtils",
         code: arrayUtils,
@@ -19,7 +19,7 @@ pub fun setup() {
 
     Test.assert(err == nil)
 
-    var stringUtils = Test.readFile("../contracts/StringUtils.cdc")
+    let stringUtils = Test.readFile("../contracts/StringUtils.cdc")
     err = blockchain.deployContract(
         name: "StringUtils",
         code: stringUtils,
