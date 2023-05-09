@@ -1,4 +1,4 @@
-# Cadence Code Coverage
+# Cadence Testing Framework & Code Coverage
 
 ## Requirements
 
