@@ -149,6 +149,8 @@ Locations that start with `A.` are contracts deployed to an account, ones that s
 
 The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was deployed on the integration tests, and that's why it is included in the resulting coverage report.
 
+**Note:** These two contracts are taken from: https://github.com/green-goo-dao/flow-utils. They are copied here for demonstration purposes. To get the original source code, visit the above repository.
+
 For viewing the coverage report of the `StringUtils` smart contract, we can just consult the value of the `A.01cf0e2f2f715450.StringUtils` key, in the `coverage.json` file.
 
 The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.
