@@ -1,3 +1,5 @@
+// Copied from https://github.com/green-goo-dao/flow-utils/blob/main/cadence/contracts/ArrayUtils.cdc
+
 pub contract ArrayUtils {
 
     pub fun rangeFunc(_ start: Int, _ end: Int, _ f: ((Int):Void)) {
