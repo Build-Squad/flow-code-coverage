@@ -161,6 +161,22 @@ For viewing the coverage report of the `StringUtils` smart contract, we can just
 
 The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.
 
+There is also a more advance example of integration tests for the `ApprovalVoting` smart contract, which deals with resources, multi-sig transactions etc.
+
+```bash
+flow test --cover test_approval_voting.cdc
+
+Test results: "test_approval_voting.cdc"
+- PASS: testInitializeEmptyProposals
+- PASS: testInitializeProposals
+- PASS: testProposalsImmutability
+- PASS: testIssueBallot
+- PASS: testCastVoteOnMissingProposal
+- PASS: testCastVote
+- PASS: testViewVotes
+Coverage: 45.5% of statements
+```
+
 ## For Emulator
 
 It is also possible to view code coverage through the emulator, outside the context of testing.
