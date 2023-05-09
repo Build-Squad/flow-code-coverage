@@ -7,14 +7,14 @@ Make sure that you have installed the minimum required version of `flow-cli`:
 ```bash
 flow version
 
-Version: v0.49.0
-Commit: 388ea9cd23106e01894368e19ea7de7278cad60a
+Version: v1.0.2
+Commit: 5b6d176eec1c6248968f17ef4126327db2788103
 ```
 
 To install it, simply run:
 
 ```bash
-sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v0.49.0
+sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v1.0.2
 ```
 
 ## For Testing
