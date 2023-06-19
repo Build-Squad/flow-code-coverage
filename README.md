@@ -7,14 +7,14 @@ Make sure that you have installed the minimum required version of `flow-cli`:
 ```bash
 flow version
 
-Version: v1.0.2
-Commit: 5b6d176eec1c6248968f17ef4126327db2788103
+Version: v1.3.0
+Commit: c0ab2d92552522d6f57e452399d906360dc5c6bf
 ```
 
 To install it, simply run:
 
 ```bash
-sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v1.0.2
+sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)" -- v1.3.0
 ```
 
 ## For Testing
@@ -31,7 +31,7 @@ The output will look something like this:
 Test results: "tests/test_foo_contract.cdc"
 - PASS: testGetIntegerTrait
 - PASS: testAddSpecialNumber
-Coverage: 93.3% of statements
+Coverage: 95.7% of statements
 ```
 
 It looks like not all statements were covered by the test inputs. To view details for the coverage report,
@@ -40,7 +40,7 @@ we can consult the auto-generated `coverage.json` file:
 ```json
 {
   "coverage": {
-    "S.../contracts/FooContract.cdc": {
+    "S.FooContract": {
       "line_hits": {
         "14": 1,
         "18": 9,
@@ -63,13 +63,9 @@ we can consult the auto-generated `coverage.json` file:
       ],
       "statements": 15,
       "percentage": "93.3%"
-    }
-  },
-  "excluded_locations": [
-    "s.7465737400000000000000000000000000000000000000000000000000000000",
-    "I.Crypto",
-    "I.Test"
-  ]
+    },
+  }
+  ...
 }
 ```
 
@@ -81,7 +77,7 @@ flow test --cover --coverprofile=codecov.json tests/test_foo_contract.cdc
 
 Reading the JSON file, we can see that for `FooContract` the line `27` was missed during the tests (not covered by the test inputs).
 
-To fix that, we can tweak the `testInputs` Dictionary on `tests/test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `13`, we now get:
+To fix that, we can tweak the `testInputs` Dictionary on `tests/test_foo_contract.cdc` to observe how the coverage percentage changes. By uncommenting the line `14`, we now get:
 
 ```bash
 flow test --cover tests/test_foo_contract.cdc
@@ -89,7 +85,7 @@ flow test --cover tests/test_foo_contract.cdc
 Test results: "tests/test_foo_contract.cdc"
 - PASS: testGetIntegerTrait
 - PASS: testAddSpecialNumber
-Coverage: 100.0% of statements
+Coverage: 97.1% of statements
 ```
 
 For some more realistic contracts and tests:
@@ -104,11 +100,11 @@ Test results: "tests/test_array_utils.cdc"
 - PASS: testMap
 - PASS: testMapStrings
 - PASS: testReduce
-Coverage: 90.6% of statements
+Coverage: 94.3% of statements
 ```
 
 Look at the files `contracts/ArrayUtils.cdc` (smart contract) and `tests/test_array_utils.cdc` (tests for the smart contract).
-For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 25 in `tests/test_array_utils.cdc`.
+For the `ArrayUtils.range` method, we have omitted the code branch where `start > end` on purpose. It is left as an exercise for the reader. Look at the comment on line 26 in `tests/test_array_utils.cdc`.
 
 Note that the above examples of tests could be best described as unit tests.
 
@@ -131,17 +127,13 @@ Test results: "tests/test_string_utils.cdc"
 - PASS: testSubstringUntil
 - PASS: testSplit
 - PASS: testJoin
-Coverage: 54.5% of statements
+Coverage: 87.9% of statements
 ```
 
 The generated `coverage.json` file is somewhat more elaborate, for integration tests. By viewing its content, we find the following keys:
 
 - `A.01cf0e2f2f715450.ArrayUtils`
 - `A.01cf0e2f2f715450.StringUtils`
-- `A.0ae53cb6e3f42a79.FlowToken`
-- `A.e5a8b7f23e8b548f.FlowFees`
-- `A.ee82856bf20e2aa6.FungibleToken`
-- `A.f8d6e0586b0a20c7.FlowServiceAccount`
 
 and some other locations.
 
@@ -153,12 +145,13 @@ The `ArrayUtils` smart contract is imported by `StringUtils`, that's why it was 
 
 For viewing the coverage report of the `StringUtils` smart contract, we can just consult the value of the `A.01cf0e2f2f715450.StringUtils` key, in the `coverage.json` file.
 
-The rest of the keys are system contracts that are always available in the Flow Emulator, which is utilized as the backend implementation for integration tests.
-
 There is also a more advance example of integration tests for the `ApprovalVoting` smart contract, which deals with resources, multi-sig transactions etc.
 
 ```bash
 flow test --cover tests/test_approval_voting.cdc
+11:12AM INF LOG: "Proposals Initialized!"
+11:12AM INF LOG: "Ballot transferred to voter"
+11:12AM INF LOG: "Vote cast and tallied"
 
 Test results: "tests/test_approval_voting.cdc"
 - PASS: testInitializeEmptyProposals
@@ -168,7 +161,7 @@ Test results: "tests/test_approval_voting.cdc"
 - PASS: testCastVoteOnMissingProposal
 - PASS: testCastVote
 - PASS: testViewVotes
-Coverage: 45.5% of statements
+Coverage: 93.8% of statements
 ```
 
 ## For Emulator
