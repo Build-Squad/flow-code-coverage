@@ -23,7 +23,7 @@ pub fun testGetIntegerTrait() {
         let result = foo.getIntegerTrait(input)
 
         // Assert
-        Test.assert(result == testInputs[input])
+        Test.assertEqual(result, testInputs[input]!)
     }
 }
 
@@ -32,5 +32,5 @@ pub fun testAddSpecialNumber() {
     foo.addSpecialNumber(78557, "Sierpinski")
 
     // Assert
-    Test.assert("Sierpinski" == foo.getIntegerTrait(78557))
+    Test.assertEqual("Sierpinski", foo.getIntegerTrait(78557))
 }

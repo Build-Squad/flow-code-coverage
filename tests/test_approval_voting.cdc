@@ -17,7 +17,7 @@ pub fun setup() {
         arguments: []
     )
 
-    Test.assert(err == nil)
+    Test.expect(err, Test.beNil())
 }
 
 pub fun testInitializeEmptyProposals() {
@@ -33,10 +33,7 @@ pub fun testInitializeEmptyProposals() {
     let result = blockchain.executeTransaction(tx)
 
     // Fails with error: pre-condition failed: Cannot initialize with no proposals
-    Test.assert(
-        result.status == Test.ResultStatus.failed,
-        message: result.error!.message
-    )
+    Test.expect(result, Test.beFailed())
 }
 
 pub fun testInitializeProposals() {
@@ -54,7 +51,11 @@ pub fun testInitializeProposals() {
 
     let result = blockchain.executeTransaction(tx)
 
-    Test.assert(result.status == Test.ResultStatus.succeeded)
+    Test.expect(result, Test.beSucceeded())
+
+    let typ = CompositeType("A.01cf0e2f2f715450.ApprovalVoting.ProposalsInitialized")!
+    let events = blockchain.eventsOfType(typ)
+    Test.assertEqual(1, events.length)
 }
 
 pub fun testProposalsImmutability() {
@@ -70,10 +71,7 @@ pub fun testProposalsImmutability() {
     let result = blockchain.executeTransaction(tx)
 
     // Fails with error: pre-condition failed: Proposals can only be initialized once
-    Test.assert(
-        result.status == Test.ResultStatus.failed,
-        message: result.error!.message
-    )
+    Test.expect(result, Test.beFailed())
 }
 
 pub fun testIssueBallot() {
@@ -87,7 +85,7 @@ pub fun testIssueBallot() {
 
     let result = blockchain.executeTransaction(tx)
 
-    Test.assert(result.status == Test.ResultStatus.succeeded)
+    Test.expect(result, Test.beSucceeded())
 }
 
 pub fun testCastVoteOnMissingProposal() {
@@ -102,10 +100,7 @@ pub fun testCastVoteOnMissingProposal() {
     let result = blockchain.executeTransaction(tx)
 
     // Fails with error: pre-condition failed: Cannot vote for a proposal that doesn't exist
-    Test.assert(
-        result.status == Test.ResultStatus.failed,
-        message: result.error!.message
-    )
+    Test.expect(result, Test.beFailed())
 }
 
 pub fun testCastVote() {
@@ -119,15 +114,19 @@ pub fun testCastVote() {
 
     let result = blockchain.executeTransaction(tx)
 
-    Test.assert(result.status == Test.ResultStatus.succeeded)
+    Test.expect(result, Test.beSucceeded())
+
+    let typ = CompositeType("A.01cf0e2f2f715450.ApprovalVoting.VoteCasted")!
+    let events = blockchain.eventsOfType(typ)
+    Test.assertEqual(1, events.length)
 }
 
 pub fun testViewVotes() {
     let code = Test.readFile("../scripts/view_votes.cdc")
 
-    var result = blockchain.executeScript(code, [])
-    var votes = (result.returnValue as! {Int: Int}?)!
+    let result = blockchain.executeScript(code, [])
+    let votes = (result.returnValue as! {Int: Int}?)!
 
-    Test.assert(votes[0] == 0)
-    Test.assert(votes[1] == 1)
+    let expected = {0: 0, 1: 1}
+    Test.assertEqual(expected, votes)
 }

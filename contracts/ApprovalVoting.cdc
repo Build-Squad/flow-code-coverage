@@ -23,6 +23,12 @@ pub contract ApprovalVoting {
     // Number of votes per proposal.
     pub let votes: {Int: Int}
 
+    // Event emitted when proposals are initialized by the admin.
+    pub event ProposalsInitialized(proposals: [String])
+
+    // Event emitted when users cast a vote on a proposal.
+    pub event VoteCasted(proposal: String)
+
     /// This is the resource that is issued to users.
     /// When a user gets a Ballot object, they call the `vote` function
     /// to include their votes, and then cast it in the smart contract
@@ -74,6 +80,8 @@ pub contract ApprovalVoting {
                 ApprovalVoting.votes[i] = 0
                 i = i + 1
             }
+
+            emit ProposalsInitialized(proposals: proposals)
         }
 
         // The admin calls this function to create a new Ballot
@@ -86,18 +94,22 @@ pub contract ApprovalVoting {
     // A user moves their ballot to this function in the contract where
     // its votes are tallied and the ballot is destroyed.
     pub fun cast(ballot: @Ballot) {
+        var proposal = ""
         var index = 0
         // Look through the ballot.
         while index < self.proposals.length {
             if ballot.choices[index]! {
                 // Tally the vote if it is approved.
                 self.votes[index] = self.votes[index]! + 1
+                proposal = self.proposals[index]
             }
             index = index + 1
         }
 
         // Destroy the ballot because it has been tallied.
         destroy ballot
+
+        emit VoteCasted(proposal: proposal)
     }
 
     // Initializes the contract by setting the proposals and votes
